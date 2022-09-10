@@ -83,3 +83,24 @@ for i in range(n):
     a[i][n - i - 1] = '*'
 for row in a:
     print(' '.join(row))
+    
+# #10
+ students = [{input() for j in range(int(input()))} for i in range(int(input()))]
+ known_by_everyone, known_by_someone = set.intersection(*students), set.union(*students)
+ print(len(known_by_everyone), *sorted(known_by_everyone), sep='\n')
+ print(len(known_by_someone), *sorted(known_by_someone), sep='\n')
+    
+#11
+Action_Permissions = {'read':'R','write':'W','execute':'X'}
+file_permissions = {}
+for i in range(int(input())):
+    file,*permissons = input().split()
+    file_permissions[file] = set(permissons)
+
+for i in range (int(input())):
+    action,file = input().split()
+    if Action_Permissions[action] in file_permissions[file]:
+        print('OK')
+    else:
+        print('Access denied')
+
