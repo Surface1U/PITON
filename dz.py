@@ -89,6 +89,27 @@ for row in a:
  known_by_everyone, known_by_someone = set.intersection(*students), set.union(*students)
  print(len(known_by_everyone), *sorted(known_by_everyone), sep='\n')
  print(len(known_by_someone), *sorted(known_by_someone), sep='\n')
+
+#10.1
+n = int(input())
+all_nums = set(range(1, n + 1))
+possible_nums = all_nums
+while True:
+    guess = input()
+    if guess == 'HELP':
+        break
+    guess = {int(x) for x in guess.split()}
+    answer = input()
+    if answer == 'YES':
+        possible_nums &= guess
+    else:
+        possible_nums &= all_nums - guess
+ 
+print(' '.join([str(x) for x in sorted(possible_nums)]))
+
+#10.2
+print(len(set(input().split()) & set(input().split())))
+
     
 #11
 Action_Permissions = {'read':'R','write':'W','execute':'X'}
@@ -104,3 +125,33 @@ for i in range (int(input())):
     else:
         print('Access denied')
 
+#11.1
+num_votes = {}
+for _ in range(int(input())):
+    candidate, votes = input().split()
+    num_votes[candidate] = num_votes.get(candidate, 0) + int(votes)
+ 
+for candidate, votes in sorted(num_votes.items()):
+    print(candidate, votes)
+    
+    
+#11.2
+
+def height(man):
+    if man not in p_tree:
+        return 0
+    else:
+        return 1 + height(p_tree[man])
+ 
+p_tree = {}
+n = int(input())
+for i in range(n - 1):
+    child, parent = input().split()
+    p_tree[child] = parent
+ 
+heights = {}
+for man in set(p_tree.keys()).union(set(p_tree.values())):
+    heights[man] = height(man)
+ 
+for key, value in sorted(heights.items()):
+    print(key, value)
