@@ -1,37 +1,42 @@
-#использование алгоритма Кадане(в первый раз слышу, честно) в действии
+firstFile = open(folder + "9a.txt", "r")
+secondFile = open(folder + "9b.txt", "r")
 
-from itertools import *
+firstLines = firstFile.readlines()
+secondLines = secondFile.readlines()
 
-def maxsum(iterable):
-    maxsofar = maxendinghere = 0
-    for x in iterable:
-        if((maxendinghere + x)%100 == 50):
-            maxendinghere = max(maxendinghere+x,0)
-        maxsofar = max(maxsofar,maxendinghere)
-    return maxsofar
+firstFile.close()
+secondFile.close()
 
-def justsum(iterable):
-    maxsofar = maxendinghere = 0
-    for x in iterable:
-        maxendinghere = max(maxendinghere+x,0)
-        maxsofar = max(maxsofar,maxendinghere)
-    return maxsofar
+readyFirstLines = list(map(str.strip, firstLines))
+readySecondLines = list(map(str.strip, secondLines))
+firstArr = []
+secondArr = []
 
+for el in readyFirstLines:
+    firstArr.append(el)
+for el in readySecondLines:
+    secondArr.append(el)
+fArr = list(map(int, firstArr))
+sArr = list(map(int, secondArr))
 
-#s =0
-data = []
-data1 = []
-f = open("C:/Users/Alexander/Desktop/9b.txt","r")
-y = int(f.readline())
-fa = open("C:/Users/Alexander/Desktop/9a.txt","r")
-y1 = int(fa.readline())
-data = [int(i) for i in f.read().split()]
-data1 = [int(i) for i in fa.read().split()]
+aF = [0] * 100
+bF = [0] * 100
 
-print("Для файла b:",maxsum(data),":","Максимальная сумма",justsum(data))
-print("Для файла a:",maxsum(data1),":","\tМаксимальная сумма",justsum(data1))
+for x in fArr:
+    a1 = aF.copy()
+    for i in range(100):
+        if aF[i] != 0:
+            a1[(i + x) % 100] = max(a1[(i + x) % 100], aF[i] + x)
+    a1[x % 100] = max(a1[x % 100], x)
+    aF = a1.copy()
 
+for x in sArr:
+    a1 = bF.copy()
+    for i in range(100):
+        if bF[i] != 0:
+            a1[(i + x) % 100] = max(a1[(i + x) % 100], bF[i] + x)
+    a1[x % 100] = max(a1[x % 100], x)
+    bF = a1.copy()
 
-
-
-
+print(aF[50])
+print(bF[50])
