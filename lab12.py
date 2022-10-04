@@ -23,7 +23,12 @@ d = {}
 
 
     #number of letters
-for x in alpha:
-    occurrences[x] = letters.count(x)
-    for x in occurrences:
-        print (x, occurrences[x])
+#for x in alpha:
+ #   occurrences[x] = letters.count(x)
+  #  for x in occurrences:
+   #     print (x, occurrences[x])
+
+#from collections import Counter
+
+c = Counter(letters)
+print(c.most_common())
