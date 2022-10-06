@@ -13,7 +13,7 @@ class Animal:
     def name(self, name): self.__name = name
 
     def eat(self, foodName):
-        print(f'{self.__name} is food -  {foodName}...')
+        print(f'{self.__name} is eating {foodName}...')
 
     def makeNoise(self):
         print(f'{self.__name}\'s saying grrrrhh...')
@@ -27,6 +27,15 @@ class Cat(Animal):
     def makeNoise(self):
         print('Meow!')
 
+class Dog(Animal):
+    def __init__(self, name, color, weight):
+        super().__init__(name)
+        self.color = color
+        self.weight = weight
+        print('A dog\'s just arrived')
+
+    def makeNoise(self):
+        print(f'{super().name}\'s saying woof...')
 
 
 class StringVar:
@@ -63,8 +72,8 @@ if __name__ == "__main__":
 
     animal = Animal('V')
     print('Animal\'s name is', animal.name)
-    animal.name = 'David'
-    animal.eat('apple')
+    animal.name = 'Human'
+    animal.eat('Humans')
     animal.makeNoise()
 
     strObj = StringVar('qwerty')
@@ -72,13 +81,14 @@ if __name__ == "__main__":
     strObj.set('abcdef')
     print(strObj.get())
 
-    dog1 = Dog(' ', 'White', 10.5)
-    dog1.name = 'Winston'
+    dog1 = Dog('SUP', 'BLACK', 10.5)
+    dog1.name = 'Oleg'
     print(dog1.name)
     dog1.makeNoise()
-    dog1.eat('cookie')
-    dog2 = Dog('', '', 9)
-    dog2.name = ''
+    dog1.eat('dogs')
+    dog2 = Dog('Kot', 'Korm', 9)
+    dog2.name = 'IO'
     print(dog2.name)
     dog2.makeNoise()
     dog2.eat('p**p')
+Footer
