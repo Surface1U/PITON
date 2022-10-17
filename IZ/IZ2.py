@@ -96,25 +96,7 @@ class Fraction:
 		return Fraction(0,
 									self_fr_up * other_fr_up,
 									self_fr_down * other_fr_down)
-									
-	def __eq__(self,other):
-		self_fr_up = self.fr_up
-		self_fr_down = self.fr_down
-		other_fr_up = other.fr_up
-		other_fr_down = other.fr_down
-		if self.fr_down != other.fr_down:
-			self_fr_down *= other.fr_down
-			self_fr_up *= other.fr_down
-			other_fr_down *= self.fr_down
-			other_fr_up *= self.fr_down
-		if self.integer == other.integer \
-			and self_fr_up == other_fr_up:
-			return True
-		else:
-			return False
-			
-	def __ne__(self, other):
-		return not self.__eq__(other)
+						 
 	
 	def __lt__(self, other):
 		self_fr_up = self.fr_up
@@ -153,12 +135,7 @@ class Fraction:
 			return True
 		else:
 			return False
-	
-	def __le__(self, other):
-		return (self.__lt__(other) or self.__eq__(other))
-	
-	def __ge__(self, other):
-		return (self.__gt__(other) or self.__eq__(other))
+	 
 	
 	def __int__(self):
 		try:
