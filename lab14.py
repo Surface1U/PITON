@@ -1,166 +1,222 @@
+#task1
+
+import tkinter
 
 
-def shit():
-    import tkinter
-    import math
-    def task1():
+# Вызывается в момент нажатия на кнопку:
+def click():
+    # Получаем строковое содержимое поля ввода с помощью метода get()
+    # C помощью config() можем изменить отображаемый текст
+    faren = entry.get()
+    # (Фаренгейт — 32): 1, 8 = Цельсий
+    try:
+        res = (float(faren) - 32) / 1.8
+        label.config(text=res)
+    except:
+        label.config(text="Ошибка, введите число!")
+        # ValueError
 
-        def fahrToCels(fahr):
-            return (fahr - 32) * (5 / 9)
-
-        def click():
-            resLabel.config(text=fahrToCels(int(entryBox.get())))
-
-        root = tkinter.Tk()
-        frame = tkinter.Frame(root).pack()
-        root.resizable(width=False, height=False)
-        tkinter.Label(text="Temperature in Fahrenheit", padx=5).pack(anchor='n')
-        entryBox = tkinter.Entry(frame)
-        entryBox.pack(anchor='n')
-        resLabel = tkinter.Label(frame)
-        resLabel.pack(anchor='n')
-        tkinter.Button(frame, text='Print', command=click).pack(pady=5)
-        tkinter.Button(frame, text='Quit', command=root.destroy).pack(pady=5)
-        root.mainloop()
-
-    def task2():
-        import requests
-        import re
-        import random
-
-        def getRuWord():
-            response = requests.get('https://wooordhunt.ru/dic/content/en_ru')
-            regex = r'\/dic\/list\/en_ru\/\w{1,2}'
-            #print('Content:')
-            matches = re.findall(regex, response.text)
-            randomPage = 'https://wooordhunt.ru' + random.choice(matches)
-            response = requests.get(randomPage)
-            ru_regex = r'[А-Яа-я]+'
-            #print(response.text)
-            ru_matches = re.findall(ru_regex, response.text)
-            return random.choice(ru_matches).lower()
-
-        from translate import Translator
+window = tkinter.Tk()
+window.title("Перевод Фаренгейт в градусы")
+window.geometry('350x450+700+200')
+window.config(bg="black")
+frame = tkinter.Frame(window)
+frame.pack(side='top')
+entry = tkinter.Entry(frame)
+entry.pack(side='top')
+label = tkinter.Label(frame)
+label.pack(side='top')
+# Привязываем обработчик нажатия на кнопку к функции click()
+button = tkinter.Button(frame, text='Посчитать градусы в цельсиях!', command=click)
+button.pack(side='top')
+exet = tkinter.Button(window, text='Выйти из программы', command=window.destroy).pack(side='top')
+window.mainloop()
 
 
-        def guess():
-            value = int(tries['text'][len(tries['text']) - 1])
-            tries['text'] = f'Tries left: {value - 1}'
-            if (value == 1):
-                tries['text'] = 'You\'ve lost!'
-                guessBtn['state'] = tkinter.DISABLED
+#taskt2
 
-            translator = Translator(from_lang='ru', to_lang='en')
-            ru_text = ru_word['text']
-            en_text = translator.translate(ru_text).lower()
-            if entryBox.get() == en_text:
-                tries['text'] = 'You win!'
-                guessBtn['state'] = tkinter.DISABLED
-            return en_text
+import random
+import tkinter
+from tkinter import *
 
-        def reset():
-            tries['text'] = 'Tries left: 3'
-            ru_word['text'] = getRuWord()
-            guessBtn['state'] = tkinter.ACTIVE
-            ru_word['state'] = tkinter.ACTIVE
 
-        def hint():
-            print(guess())
-            ru_word['state'] = tkinter.DISABLED
-            entryBox.delete(0, tkinter.END)
-            entryBox.insert(0, guess())
+def click_try():
+    global k
+    var = entry_1.get()
+    if label_2.cget("text") != "":
+        if var.isalpha():
+            if k != 0:
+                if var == dictionary[rus]:
+                    label_5.config(text="sucker!!!")
+                    k = 5
+                else:
+                    label_5.config(text="Wrong! tryes:" + str(k))
+                    k -= 1
+            else:
+                label_5.config(text="Wrong")
+                click_rand()
+                k = 5
+        else:
+            label_5.config(text="Error sucker")
+    else:
+        label_5.config(text="U did nothing ")
 
-        root = tkinter.Tk()
-        root.resizable(width=False, height=False)
-        root.geometry('210x150')
-        root['background']='#856ff8'
 
-        f_top = tkinter.Frame(root)
-        f_bot = tkinter.Frame(root)
-        f_top['background']='#856ff8'
-        f_bot['background']='#856ff8'
+def click_rand():
+    global rus, eng
+    rus, eng = random.choice(list(dictionary.items()))
+    label_2.config(text=rus)
 
-        ru_word = tkinter.Button(f_top, command=hint, width=12, height=1, text=getRuWord(), bg='#5B4CA9')
-        entryBox = tkinter.Entry(f_top, width=20, bg='#AFB4FF')
 
-        guessBtn = tkinter.Button(f_bot, width=5, height=1, text='Guess', command=guess, bg='#5B4CA9')
-        resetBtn = tkinter.Button(f_bot, width=5, height=1, text='Reset', command=reset, bg='#5B4CA9')
-        tries = tkinter.Label(f_bot, width=10, height=1, text=f'Tries left: 3', bg='#5B4CA9')
+window = tkinter.Tk()
+window.title("Угадай слово")
 
-        f_top.pack(pady=20)
-        f_bot.pack(pady=10)
-        ru_word.pack(padx=10, pady=5)
-        entryBox.pack(padx=10, pady=5)
-        guessBtn.pack(side=tkinter.LEFT, padx=10)
-        resetBtn.pack(side=tkinter.LEFT, padx=10)
-        tries.pack(side=tkinter.LEFT, padx=10)
+dictionary = {"яблоко": "apple",
+              "абрикос": "apricot",
+              "апельсин": "orange",
+              "груша": "pear",
+              "лайм": "lime",
+              "мандарин": "tangerine",
+              "персик": "peach",
+              "дыня": "melon",
+              "лимон": "lemon",
+              "папайя": "papaya",
+              }
 
-        root.mainloop()
+window.config(bg="blue")
+window.geometry('500x500')
 
-    def task5():
-        from tkinter import ttk
-        from tkinter import filedialog
+k = 5
+rus = ""
+eng = ""
+label_1 = Label(text="random word ->", width=30, borderwidth=2, relief="solid")
+label_1.grid(row=0, column=0, pady=10, padx=10)
 
-        def calculate():
-            try:
-                radius = int(radius_entry.get())
-                V = (4 / 3) * math.pi * radius ** 3
-                res_entry.delete(0, tkinter.END)
-                res_entry.insert(0, V)
-            except ValueError:
-                res_entry.delete(0, tkinter.END)
-                res_entry.insert(0, 'ERROR')
+label_2 = Label(width=30, borderwidth=2, relief="solid")
+label_2.grid(row=0, column=1, pady=10, padx=10)
 
-        def save():
-            files = [('TXT File', '*.txt'),
-                     ('HTML File', '*.html')]
-            saving_format = select_list.current()
-            print(saving_format)
-            f = filedialog.asksaveasfile(mode='w', filetypes=[files[saving_format]])
-            if f is None:
-                return
-            res_to_save = res_entry.get()
-            f.write(res_to_save)
+label_3 = Label(text="asnwer ->", width=30, borderwidth=2, relief="solid")
+label_3.grid(row=3, column=0, pady=10, padx=10)
+
+entry_1 = Entry(width=30, borderwidth=2, relief="solid")
+entry_1.grid(row=3, column=1, pady=10, padx=10)
+
+button_1 = Button(text="generate", width=30, command=lambda: click_rand())
+button_1.grid(row=1, column=0, columnspan=3, pady=10, padx=10)
+
+button_2 = Button(text="try", width=30, command=lambda: click_try())
+button_2.grid(row=4, column=0, columnspan=3, pady=10, padx=10)
+
+label_5 = Label(width=60, height=3, borderwidth=2, relief="solid")
+label_5.grid(row=5, column=0, columnspan=3, pady=10, padx=10)
+
+exet = Button(window, text='close this f', command=window.destroy)
+exet.grid(row=6, column=0, columnspan=3, pady=10, padx=10)
+
+exet = Button(window, text='close this', command=lambda: window.destroy)
+window.mainloop()
+
+
+#task5
+
+import tkinter
+from tkinter import filedialog
+from tkinter import *
+from math import pi
+
+# Задание 5. Посчитать объём сферы по радиусу и сохранить в файл
+
+html_template1 = """<html>
+<head>
+<title>Title</title>
+</head>
+<body>
+<h2>Текст в формате html</h2>
+<p>
+"""
+html_template2 = """.</p>
+</body>
+</html>
+"""
+
+
+# <p>Default code has been loaded into the Editor.</p>
+
+def click():
+    # Получаем строковое содержимое поля ввода с помощью метода get()
+    # C помощью config() можем изменить отображаемый текст
+
+    if entry_1.get().isdigit():
+        inp = float(entry_1.get())
+        try:
+            res = (4 * pi * inp ** 3) / 3
+            label_3.config(text=res)
+        except:
+            label_3.config(text="Ошибка, введите число!")
+    else:
+        label_3.config(text="Ошибка, введите число!")
+
+
+def savefileastxt():
+    var = str(label_3.cget("text"))
+    if var != "":
+        try:
+            path = filedialog.asksaveasfile(filetypes=(("Text files", "*.txt"), ("All files", "*.*"))).name
+            window.title('Notepad - ' + path + ".txt")
+        except:
+            return
+        with open(path + ".txt", 'w') as f:
+            f.write("Ответ для радиуса длины " + str(entry_1.get()) + " = " + str(label_3.cget("text")))
             f.close()
-
-        root = tkinter.Tk()
-        root.geometry('500x500')
-        root.resizable(width=False, height=False)
-        root['background'] = '#AAAAAA'
-        root.title('Sphere radius')
-        root.resizable()
-
-        f_top = tkinter.Frame(root, bg='#AAAAAA')
-        f_mid = tkinter.Frame(root, bg='#AAAAAA')
-        f_bot = tkinter.Frame(root, bg='#AAAAAA')
-
-        radius_label = tkinter.Label(f_top, text='Set radius:', bg='#AAAAAA')
-        radius_entry = tkinter.Entry(f_top)
-
-        res_label = tkinter.Label(f_mid, text='Calculation result:', bg='#AAAAAA')
-        res_entry = tkinter.Entry(f_mid)
-
-        calc_btn = tkinter.Button(text='Calculate', command=calculate, bg='#AAAAAA')
-
-        save_btn = tkinter.Button(f_bot, text='Save', command=save, bg='#FFFFFF', width=8)
-        select_list = ttk.Combobox(f_bot, values=['.txt', '.html'], background='#FFFFFF', width=10)
-
-        f_top.pack(pady=30)
-        f_mid.pack(pady=0)
-        calc_btn.pack(pady=20)
-        f_bot.pack(pady=0)
-
-        radius_label.pack(side=tkinter.LEFT, padx=30)
-        radius_entry.pack(side=tkinter.LEFT)
-        res_label.pack(side=tkinter.LEFT, padx=10)
-        res_entry.pack(side=tkinter.LEFT)
-        save_btn.pack(side=tkinter.LEFT, padx=30)
-        select_list.pack(side=tkinter.LEFT)
-
-        root.mainloop()
+    else:
+        pass
 
 
-    task5()
-# demo
-if __name__ == "__main__":
-    shit()
+def savefileashtml():
+    var = str(label_3.cget("text"))
+    if var != "":
+        try:
+            path = filedialog.asksaveasfile(filetypes=(("Html file", "*.html"), ("All files", "*.*"))).name
+            window.title('Notepad - ' + path + ".html")
+        except:
+            return
+        with open(path + ".html", 'w') as f:
+            # html_template1.replace("Title", path)
+            f.write(html_template1)
+            f.write("Ответ для радиуса длины " + str(entry_1.get()) + " = " + str(label_3.cget("text")))
+            f.write(html_template2)
+            f.close()
+    else:
+        pass
+
+
+window = tkinter.Tk()
+window.title("Перевод Фаренгейт в градусы")
+
+window.config(bg="black")
+
+label_1 = Label(text="Ввод ->", width=30, borderwidth=2, relief="solid")
+label_1.grid(row=0, column=0, pady=10, padx=10)
+
+label_2 = Label(text="Ответ ->", width=30, borderwidth=2, relief="solid")
+label_2.grid(row=3, column=0, pady=10, padx=10)
+
+label_3 = Label(width=30, borderwidth=2, relief="solid")
+label_3.grid(row=3, column=1, pady=10, padx=10)
+
+entry_1 = Entry(width=30, borderwidth=2, relief="solid")
+entry_1.grid(row=0, column=1, pady=10, padx=10)
+
+button_1 = Button(text="Посчитать", width=30, command=lambda: click())
+button_1.grid(row=1, column=0, columnspan=3, pady=10, padx=10)
+
+button_2 = Button(text="Сохранить в .txt", width=15, command=lambda: savefileastxt())
+button_2.grid(row=4, column=0, columnspan=1, pady=10, padx=10)
+
+button_3 = Button(text="Сохранить в .html", width=15, command=lambda: savefileashtml())
+button_3.grid(row=4, column=1, columnspan=1, pady=10, padx=10)
+
+exet = Button(window, text='Выйти из программы', command=window.destroy)
+exet.grid(row=6, column=0, columnspan=3, pady=10, padx=10)
+
+window.mainloop()
