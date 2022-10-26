@@ -195,6 +195,26 @@ def select(con):
     #sql_Excurse(con)
 
 
+def sql_update(con):
+    cursorObj = con.cursor()
+    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nig" where IDStand = 1')
+    con.commit()
+
+    cursorObj = con.cursor()
+    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nig1" where IDStand = 2')
+    con.commit()
+
+    cursorObj = con.cursor()
+    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nig2" where IDStand = 3')
+    con.commit()
+
+
+def sql_delete(con):
+    cursorObj = con.cursor()
+    cursorObj.execute('DELETE from StandMan where Firstname = "EEE" ')
+    con.commit()
+
+
 con = sql_connection()
 #sql_Exhibition(con)
 #sql_Excurse(con)
@@ -204,11 +224,10 @@ con = sql_connection()
 #sql_Client(con)
 
 
-def sql_delete(con):
-    cursorObj = con.cursor()
-    cursorObj.execute('DROP TABLE Excurse1')
-    con.commit()
-
+select(con)
+print("ВЫВОД АПДЕЙТА")
+sql_update(con)
+select(con)
+print("ВЫВОД УДАЛЕНИЯ")
 sql_delete(con)
-
 select(con)
