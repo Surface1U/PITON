@@ -197,15 +197,15 @@ def select(con):
 
 def sql_update(con):
     cursorObj = con.cursor()
-    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nig" where IDStand = 1')
+    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nigg" where IDStand = 1')
     con.commit()
 
     cursorObj = con.cursor()
-    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nig1" where IDStand = 2')
+    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nigg1" where IDStand = 2')
     con.commit()
 
     cursorObj = con.cursor()
-    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nig2" where IDStand = 3')
+    cursorObj.execute('UPDATE Stand SET ThemeStand = "Nigg2" where IDStand = 3')
     con.commit()
 
 
@@ -214,8 +214,15 @@ def sql_delete(con):
     cursorObj.execute('DELETE from StandMan where Firstname = "EEE" ')
     con.commit()
 
+def sql_insert(con):
+    cursorObj = con.cursor()
+    cursorObj.execute("INSERT INTO StandMan "
+        "VALUES(3,3,'EEE','EEE', 'EEE')")
+    con.commit()
+
 
 con = sql_connection()
+#sql_insert(con)
 #sql_Exhibition(con)
 #sql_Excurse(con)
 #sql_Stand(con)
@@ -225,9 +232,9 @@ con = sql_connection()
 
 
 select(con)
-print("ВЫВОД АПДЕЙТА")
-sql_update(con)
-select(con)
-print("ВЫВОД УДАЛЕНИЯ")
-sql_delete(con)
-select(con)
+#print("Обновлённая бд")
+#sql_update(con)
+#select(con)
+#print("Бд с удалёнными полями")
+#sql_delete(con)
+#select(con)
