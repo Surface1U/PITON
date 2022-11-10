@@ -17,10 +17,10 @@ def id_find(con, req_id):
 form = cgi.FieldStorage()
 if form.getvalue('table_list') is not None:  # запись в файл
     tbl_name = form.getvalue('table_list')
-    file = open("table.txt", "w")
+    file = open("C:/Users/Alexander/PycharmProjects/db1/cgi-bin/table.txt", "w")
     file.write(form.getvalue('table_list'))
 else:
-    inp = open("table.txt", "r")
+    inp = open("C:/Users/Alexander/PycharmProjects/db1/cgi-bin/table.txt", "r")
     tbl_name = inp.read()
     inp.close()
 
@@ -58,7 +58,7 @@ if form.getvalue('act_list') is not None:  # запись в файл
     file.write(form.getvalue('act_list'))
     file.close()
 else:
-    inp = open("option.txt", "r")
+    inp = open("C:/Users/Alexander/PycharmProjects/db1/cgi-bin/option.txt", "r")
     act = inp.readline()
     inp.close()
 
@@ -165,7 +165,7 @@ if act is not None:
         else:
             print('не существует записи с таким id')
 
-    file = open("option.txt", "w")
+    file = open("C:/Users/Alexander/PycharmProjects/db1/cgi-bin/option.txt", "w")
     file.write('None')
     file.close()
 
@@ -205,4 +205,4 @@ if act == 'Вывести все записи':
     file.close()
 
 print("""</body>
-         </html>""")
+</html>""")
