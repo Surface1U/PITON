@@ -133,10 +133,10 @@ if act is not None:
             for i in range(len(row)):
                 sql_str += headers[i + 1] + ' = "' + row[i] + '", '
             sql_str = sql_str[:-2]
-            sql_str += ' where id = ' + str(update_id)
+            sql_str += f' where ID{tbl_name} = ' + str(update_id)
             cursorObj.execute(sql_str)
             connection.commit()
-            print("запись успешно изменена")
+            print("""запись успешно изменена""")
 
         file = open("cgi-bin/option.txt", "w")
         file.write('None')
@@ -159,9 +159,9 @@ if act is not None:
         delete_id = int(form.getfirst("delete_id"))
         find = id_find(connection, delete_id)
         if find:
-            cursorObj.execute(f'DELETE from {tbl_name} where id = {delete_id}')
+            cursorObj.execute(f'DELETE from {tbl_name} where ID{tbl_name}= {delete_id}')
             connection.commit()
-            print("запись успешно удалена")
+            print("""запись успешно удалена""")
         else:
             print('не существует записи с таким id')
 
@@ -205,4 +205,4 @@ if act == 'Вывести все записи':
     file.close()
 
 print("""</body>
-</html>""")
+    </html>""")
